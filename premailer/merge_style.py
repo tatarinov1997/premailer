@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import cssutils
 import threading
 from operator import itemgetter
@@ -7,6 +8,8 @@ except ImportError:  # pragma: no cover
     # some old python 2.6 thing then, eh?
     from ordereddict import OrderedDict
 
+from premailer.cache import function_cache
+
 
 def format_value(prop):
     if prop.priority == "important":
@@ -15,6 +18,7 @@ def format_value(prop):
         return prop.propertyValue.cssText.strip()
 
 
+@function_cache()
 def csstext_to_pairs(csstext):
     """
     csstext_to_pairs takes css text and make it to list of
