@@ -136,7 +136,8 @@ class Premailer(object):
                  cssutils_logging_level=None,
                  disable_leftover_css=False,
                  align_floating_images=True,
-                 remove_unset_properties=True):
+                 remove_unset_properties=True,
+                 overwrite_basic_html_attributes=True):
         self.html = html
         self.base_url = base_url
 
@@ -177,7 +178,7 @@ class Premailer(object):
         self.disable_leftover_css = disable_leftover_css
         self.align_floating_images = align_floating_images
         self.remove_unset_properties = remove_unset_properties
-
+        self.overwrite_basic_html_attributes = overwrite_basic_html_attributes
         if cssutils_logging_handler:
             cssutils.log.addHandler(cssutils_logging_handler)
         if cssutils_logging_level:
@@ -454,7 +455,7 @@ class Premailer(object):
             self._style_to_basic_html_attributes(
                 element['item'],
                 final_style,
-                force=True
+                force=self.overwrite_basic_html_attributes
             )
 
         if self.remove_classes:
